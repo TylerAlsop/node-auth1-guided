@@ -10,6 +10,5 @@ router.get("/", (req, res) => {
     .catch(err => res.send(err));
 });
 
-/////// Middleware ///////
 
 module.exports = router;
