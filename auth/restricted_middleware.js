@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
         next()
     } else {
         res.status(401).json({
-            you: "shall not pass!"
+            you: "shall not pass! This means that you are not authorized."
         })
     } 
 }
