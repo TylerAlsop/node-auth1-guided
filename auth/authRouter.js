@@ -29,8 +29,11 @@ router.post("/login", (req, res) => {
             console.log("User", user)
             if (user && bcrypt.compareSync(password, user.password)) {
                 //remember this client
+                req.session.user = {
+                    id: user.id,
+                    username: user.username,
+                }
 
-                
                 res.status(200).json({hello: user.username})
             } else {
                 res.status(401).json({
@@ -42,5 +45,25 @@ router.post("/login", (req, res) => {
             res.status(500).json({ errorMessge: "Error finding the user."})
     })
 });
+
+router.get("/logout", (req, res) => {
+    if(req.session) {
+        req.session.destroy( error => {
+            if(error) {
+                res.status(500).json({
+                    message: "Error logging out."
+                })
+            } else {
+                res.status(200).json({
+                    message: "You have logged out successfully."
+                })
+            }
+        })
+    } else {
+        res.status(200).json({
+            message: "Already logged out."
+        })
+    }
+})
 
 module.exports = router;
